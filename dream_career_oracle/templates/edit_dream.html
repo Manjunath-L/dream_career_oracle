@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Dream</title>
+    <link rel="stylesheet" href="{% static 'css/edit_dream.css' %}">
+    <link rel="stylesheet" href="{% static 'css/global_background.css' %}">
+    <link rel="stylesheet" href="{% static 'css/messages.css' %}">
+</head>
+
+<body>
+    {% include "_messages.html" %}
+    <div class="form-container">
+        <h1>Edit Dream</h1>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <label>Dream Title</label>
+            <input type="text" name="title" value="{{ dream.title }}" required>
+
+            <label>Short Description</label>
+            <textarea name="description" required>{{ dream.description }}</textarea>
+
+            <label>Category</label>
+            <select name="category" id="category_select" onchange="toggleOtherField()">
+                <option value="">Select Category</option>
+                <option value="Tech & AI" {% if dream.category == 'Tech & AI' %}selected{% endif %}>Tech & AI</option>
+                <option value="Business & Startup" {% if dream.category == 'Business & Startup' %}selected{% endif %}>
+                    Business & Startup</option>
+                <option value="Entertainment" {% if dream.category == 'Entertainment' %}selected{% endif %}>
+                    Entertainment
+                </option>
+                <option value="Space & Science" {% if dream.category == 'Space & Science' %}selected{% endif %}>Space
+                    &
+                    Science</option>
+                <option value="Weird Ideas" {% if dream.category == 'Weird Ideas' %}selected{% endif %}>Weird Ideas
+                </option>
+                <option value="Sports & Fitness" {% if dream.category == 'Sports & Fitness' %}selected{% endif %}>
+                    Sports &
+                    Fitness</option>
+                <option value="Education" {% if dream.category == 'Education' %}selected{% endif %}>Education</option>
+                <option value="Others" {% if dream.category != 'Tech & AI' and dream.category != 'Business & Startup' and dream.category != 'Entertainment' and dream.category != 'Space & Science' and dream.category != 'Weird Ideas' and dream.category != 'Sports & Fitness' and dream.category != 'Education' %}selected{% endif %}>Others</option>
+            </select>
+
+            <div id="other_category"
+                style="display: {% if dream.category != 'Tech & AI' and dream.category != 'Business & Startup' and dream.category != 'Entertainment' and dream.category != 'Space & Science' and dream.category != 'Weird Ideas' and dream.category != 'Sports & Fitness' and dream.category != 'Education' %}block{% else %}none{% endif %};">
+                <label>Enter Custom Category</label>
+                <input type="text" name="other_category" value="{{ dream.category }}">
+            </div>
+
+            <label>Dream Level</label>
+            <select name="level" required>
+                <option value="Beginner" {% if dream.level == 'Beginner' %}selected{% endif %}>Beginner</option>
+                <option value="Epic" {% if dream.level == 'Epic' %}selected{% endif %}>Epic</option>
+                <option value="Legendary" {% if dream.level == 'Legendary' %}selected{% endif %}>Legendary</option>
+            </select>
+
+            <button type="submit">Update Dream</button>
+        </form>
+
+        <a href="{% url 'dream_detail' dream.pk %}" class="cancel">Cancel</a>
+    </div>
+
+    <script>
+        function toggleOtherField() {
+            const select = document.getElementById('category_select');
+            const otherDiv = document.getElementById('other_category');
+            if (select.value === 'Others') {
+                otherDiv.style.display = 'block';
+            } else {
+                otherDiv.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+
+</html>

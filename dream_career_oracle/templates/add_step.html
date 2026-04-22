@@ -1,0 +1,59 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Add New Step</title>
+  <link rel="stylesheet" href="{% static 'css/add_step.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/global_background.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/messages.css' %}" />
+</head>
+
+<body>
+  {% include "_messages.html" %}
+  <div class="form-container">
+    <h1>Add New Step</h1>
+    <p class="context-note">For dream: <strong>{{ dream.title }}</strong></p>
+
+    <form method="POST">
+      {% csrf_token %}
+
+      <label>Step Title</label>
+        <input
+          type="text"
+          name="step_title"
+          placeholder="e.g. Learn Python and Django"
+          required
+        />
+
+        <label>Description</label>
+        <textarea
+          name="description"
+          placeholder="What exactly do you need to do in this step?"
+          required
+        ></textarea>
+
+        <label>Estimated Time</label>
+        <input
+          type="text"
+          name="estimated_time"
+          placeholder="e.g. 2 months or 45 days"
+          required
+        />
+
+        <label>Status</label>
+        <select name="status">
+          <option value="Pending">Pending</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Completed">Completed</option>
+        </select>
+      <!-- {{ form }} -->
+
+      <button type="submit">Save Step</button>
+    </form>
+  </div>
+</body>
+
+</html>

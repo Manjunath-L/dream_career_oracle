@@ -1,0 +1,83 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create New Dream</title>
+    <link rel="stylesheet" href="{% static 'css/create_dream.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/global_background.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/messages.css' %}" />
+  </head>
+
+  <body>
+    {% include "_messages.html" %}
+    <div class="form-container">
+      <h1>Create New Dream</h1>
+
+      <form method="POST">
+        {% csrf_token %}
+
+        <label>Dream Title</label>
+        <input
+          type="text"
+          name="title"
+          placeholder="e.g. Become MMA Fighter"
+          required
+        />
+
+        <label>Short Description</label>
+        <textarea
+          name="description"
+          placeholder="Describe your dream..."
+          required
+        ></textarea>
+
+        <label>Category</label>
+        <select
+          name="category"
+          id="category_select"
+          onchange="toggleOtherField()"
+          required
+        >
+          <option value="">Select Category</option>
+          <option value="Tech & AI">Tech & AI</option>
+          <option value="Business & Startup">Business & Startup</option>
+          <option value="Entertainment">Entertainment</option>
+          <option value="Space & Science">Space & Science</option>
+          <option value="Weird Ideas">Weird & Crazy Ideas</option>
+          <option value="Sports & Fitness">Sports & Fitness</option>
+          <option value="Education">Education</option>
+          <option value="Others">Others</option>
+        </select>
+
+        <div id="other_category">
+          <label>Enter Custom Category</label>
+          <input
+            type="text"
+            name="other_category"
+            placeholder="e.g. Music, Gaming"
+          />
+        </div>
+
+        <label>Dream Level</label>
+        <select name="level" required>
+          <option value="">Select Level</option>
+          <option value="Beginner">Beginner</option>
+          <option value="Epic">Epic</option>
+          <option value="Legendary">Legendary</option>
+        </select>
+
+        <button type="submit">Create Dream</button>
+      </form>
+    </div>
+
+    <script>
+      function toggleOtherField() {
+        const select = document.getElementById("category_select");
+        const otherDiv = document.getElementById("other_category");
+        otherDiv.style.display = select.value === "Others" ? "block" : "none";
+      }
+    </script>
+  </body>
+</html>

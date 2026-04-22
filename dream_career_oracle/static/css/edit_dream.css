@@ -1,0 +1,100 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+
+:root {
+  --bg: #f4f6fa;
+  --card: #ffffff;
+  --text: #111827;
+  --muted: #4b5563;
+  --line: #dbe3ef;
+  --accent: #0f172a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: 24px 16px 36px;
+  font-family: "Plus Jakarta Sans", "Segoe UI", sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at 12% 6%, #ffffff 0%, transparent 46%),
+    radial-gradient(circle at 86% 94%, #e9eef7 0%, transparent 38%), var(--bg);
+}
+
+.form-container {
+  max-width: 700px;
+  margin: 0 auto;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+}
+
+h1 {
+  margin: 0 0 18px;
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  letter-spacing: -0.02em;
+}
+
+label {
+  display: block;
+  margin: 14px 0 6px;
+  color: #374151;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+input[type="text"],
+textarea,
+select {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  color: var(--text);
+  background: #fbfcff;
+  font-family: inherit;
+}
+
+input[type="text"]:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: #94a3b8;
+  box-shadow: 0 0 0 3px rgba(148, 163, 184, 0.2);
+}
+
+textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+button {
+  width: 100%;
+  margin-top: 18px;
+  border: none;
+  border-radius: 10px;
+  padding: 12px;
+  color: #ffffff;
+  background: var(--accent);
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #1e293b;
+}
+
+.cancel {
+  display: inline-block;
+  margin-top: 12px;
+  text-decoration: none;
+  color: #475569;
+  font-weight: 600;
+}

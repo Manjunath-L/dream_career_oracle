@@ -1,0 +1,89 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Step</title>
+    <link rel="stylesheet" href="{% static 'css/edit_step.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/global_background.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/messages.css' %}" />
+  </head>
+
+  <body>
+    {% include "_messages.html" %}
+    <div class="form-container">
+      <h1>Edit Step</h1>
+      <p class="context-note">
+        For dream: <strong>{{ step.dream.title }}</strong>
+      </p>
+
+      <form method="POST">
+        {% csrf_token %}
+
+        <label>Step Title</label>
+        <input
+          type="text"
+          name="step_title"
+          value="{{ step.step_title }}"
+          required
+        />
+
+        <label>Description</label>
+        <textarea name="description" required>{{ step.description }}</textarea>
+
+        <label>Estimated Time</label>
+        <input
+          type="text"
+          name="estimated_time"
+          value="{{ step.estimated_time }}"
+          required
+        />
+
+        <label>Status</label>
+        <select name="status">
+          <option
+            value="Pending"
+            {%
+            if
+            step.status=""
+            ="Pending"
+            %}selected{%
+            endif
+            %}
+          >
+            Pending
+          </option>
+          <option
+            value="In Progress"
+            {%
+            if
+            step.status=""
+            ="In Progress"
+            %}selected{%
+            endif
+            %}
+          >
+            In Progress
+          </option>
+          <option
+            value="Completed"
+            {%
+            if
+            step.status=""
+            ="Completed"
+            %}selected{%
+            endif
+            %}
+          >
+            Completed
+          </option>
+        </select>
+
+        <button type="submit">Save Changes</button>
+      </form>
+
+      <a href="{% url 'dream_detail' step.dream.pk %}" class="cancel">Cancel</a>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,47 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dream Tracker</title>
+  <link rel="stylesheet" href="{% static 'css/home.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/global_background.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/messages.css' %}" />
+</head>
+
+<body class="home-page" style="--home-background-image: url({% static 'Img/premium.png' %})">
+  {% include "_messages.html" %}
+  <div class="hero">
+    <h1>Dream Tracker</h1>
+    <p class="subtitle">Plan your path with clarity, focus, and momentum.</p>
+    <a href="{% url 'create_dream' %}" class="cta-button">Create New Dream</a>
+  </div>
+
+  <div class="card-grid">
+    <a href="{% url 'dream_list' %}" class="card">View All Dreams</a>
+    <a href="{% url 'create_dream' %}" class="card">Start A New Dream</a>
+  </div>
+
+  <section class="top-liked">
+    <h2>Dreams You Want to Achieve</h2>
+    {% if top_liked_dreams %}
+    <div class="top-liked-grid">
+      {% for dream in top_liked_dreams %}
+      <a href="{% url 'dream_detail' dream.pk %}" class="top-liked-card">
+        <h3>{{ dream.title }}</h3>
+        <p>{{ dream.description|truncatechars:20 }}</p>
+        <span class="likes">{{ dream.likes }} likes</span>
+      </a>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p class="empty-top-liked">No dreams available yet.</p>
+    {% endif %}
+  </section>
+
+  <script src="{% static 'js/script.js' %}" defer></script>
+</body>
+
+</html>

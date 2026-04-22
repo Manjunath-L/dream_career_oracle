@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Dreams</title>
+    <link rel="stylesheet" href="{% static 'css/dream_list.css' %}">
+    <link rel="stylesheet" href="{% static 'css/global_background.css' %}">
+    <link rel="stylesheet" href="{% static 'css/messages.css' %}">
+</head>
+
+<body>
+    {% include "_messages.html" %}
+    <div class="header">
+        <h1>All Dreams</h1>
+        <a href="{% url 'create_dream' %}" class="btn">Create New Dream</a>
+    </div>
+
+    <div class="container">
+        <div class="card-grid">
+            {% for dream in dreams %}
+            <div class="dream-card">
+                <h2>{{ dream.title }}</h2>
+                <span class="badge category">{{ dream.category }}</span>
+                <span class="badge level-{{ dream.level|lower }}">{{ dream.level }}</span>
+                <p class="dream-description">{{ dream.description|slice:":130" }}...</p>
+                <div class="card-actions">
+                    <a href="{% url 'dream_detail' dream.pk %}" class="btn btn-view">See Roadmap →</a>
+                    <form method="POST" action="{% url 'like_dream' dream.pk %}" class="like-form">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.path }}">
+                        <button type="submit" class="btn btn-like">Like</button>
+                    </form>
+                </div>
+                <p class="likes-count">{{ dream.likes }} likes</p>
+            </div>
+            {% empty %}
+            <p class="empty-state">No dreams yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+
+</html>

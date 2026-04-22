@@ -1,0 +1,97 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ dream.title }} - Dream Oracle</title>
+    <link rel="stylesheet" href="{% static 'css/dream_detail.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/global_background.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/messages.css' %}" />
+  </head>
+
+  <body>
+    {% include "_messages.html" %}
+    <div class="container">
+      <a href="{% url 'dream_list' %}" class="back-btn">← Back to All Dreams</a>
+
+      <div class="main-card">
+        <h1>{{ dream.title }}</h1>
+
+        <div class="badges">
+          <span class="badge category">{{ dream.category }}</span>
+          <span class="badge level-{{ dream.level|lower }}"
+            >{{ dream.level }}</span
+          >
+        </div>
+
+        <p class="dream-description">{{ dream.description }}</p>
+
+        <div class="progress-section">
+          <strong
+            >Progress: {{ completed_steps }} / {{ total_steps }} steps
+            completed</strong
+          >
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: {{ progress }}%;">
+              {{ progress }}%
+            </div>
+          </div>
+        </div>
+
+        <div class="action-buttons">
+          <a href="{% url 'add_step' dream.id %}" class="btn btn-add"
+            >Add New Step</a
+          >
+          <a href="{% url 'edit_dream' dream.id %}" class="btn btn-edit"
+            >Edit Dream</a
+          >
+          <a href="{% url 'delete_dream' dream.id %}" class="btn btn-delete"
+            >Delete Dream</a
+          >
+          <form
+            method="POST"
+            action="{% url 'like_dream' dream.id %}"
+            class="inline-form like-form-detail"
+          >
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ request.path }}" />
+            <button type="submit" class="btn btn-like">Like</button>
+          </form>
+        </div>
+
+        <p class="likes-count">{{ dream.likes }} likes</p>
+      </div>
+
+      <h2 class="steps-heading">Roadmap Steps</h2>
+
+      {% if steps %} {% for step in steps %}
+      <div class="step-card">
+        <h3>{{ step.step_title }}</h3>
+        <p>{{ step.description }}</p>
+        <div class="step-meta">
+          <strong>Time:</strong> {{ step.estimated_time }} &nbsp;&nbsp;
+          <span class="status status-{{ step.status|slugify }}"
+            >{{ step.status }}</span
+          >
+        </div>
+        <div class="step-actions">
+          <a href="{% url 'edit_step' step.id %}" class="btn btn-edit btn-small"
+            >Edit</a
+          >
+          <a
+            href="{% url 'delete_step' step.id %}"
+            class="btn btn-delete btn-small"
+            >Delete</a
+          >
+        </div>
+      </div>
+      {% endfor %} {% else %}
+      <div class="no-steps">
+        <p>No steps added yet.</p>
+        <p>Use "Add New Step" to start building your roadmap.</p>
+      </div>
+      {% endif %}
+    </div>
+  </body>
+</html>
