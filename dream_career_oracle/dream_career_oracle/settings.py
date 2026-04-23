@@ -31,7 +31,7 @@ SECRET_KEY = "django-insecure-bb8%yjo1!bkjlr=0%tpw9g6l%+^=-=zyrv7#yn7@r$#0188q@s
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -79,11 +79,7 @@ WSGI_APPLICATION = "dream_career_oracle.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-DATABASES = {
-    "default": dj_database_url.config(
-        default=config("DATABASE_URL")
-    )
-}
+DATABASES = {"default": dj_database_url.config(default=config("DATABASE_URL"))}
 
 print("ENV FILE LOADED:", os.getenv("DATABASE_URL"))
 
@@ -123,3 +119,4 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = BASE_DIR / "staticfiles"
